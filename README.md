@@ -1,4 +1,4 @@
-# Bài toán question answering Zalo
+# Bài toán Question Answering trong cuộc thi Zalo AI Challenge
 ## 1. Hướng giải quyết bài toán.
    - Sử dụng các thuật toán phổ biến cho bài toán question answering để giải quyết: gồm infersent, bidaf
    - Sử dụng bert pretrained (cụ thể ở đây là bert multilingual-uncased) cho task về question answering.
