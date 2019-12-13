@@ -95,4 +95,6 @@
   - Tải về file final_checkpoint_submit.zip (link ở trên) vào thư mục module_train/final_checkpoint giải nén, sau đó 
   chạy file module_evaluate/inference_model_bert.py để ra file submit.
   - Tải về file checkpoint_after_tune_squad_viet.zip vào thư mục module_train/checkpoint_tune_squad_viet giải nén, chạy
-  file module_train/main.py để train mô hình với dataset zalo.   
+  file module_train/main.py để train mô hình với dataset zalo. 
+  - Nếu có điều gì khó hiểu khi muốn chạy thử project thì có thể tạo issuse để hỏi mình (vì thực ra mình code trên pycharm 
+  và chạy thì đem code lên server chạy vì không thể load bert trên máy cá nhân nên có thể có sai sót, tks)
