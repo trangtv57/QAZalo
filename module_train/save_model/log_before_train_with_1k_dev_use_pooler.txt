@@ -1,0 +1,384 @@
+class Args:
+    do_lower_case = True
+    name_bert_base = "bert-base-multilingual-uncased"
+    cache_dir = 'checkpoint-700/'
+
+    path_input_train_data = "dataset/sample_pair_sequence.csv"
+    path_input_test_data = None
+    path_input_validation_data = "dataset/validation_bert.csv"
+
+    load_data_from_pt = True
+    path_pt_train_dataset = "dataset/train_test_origin_pair.pt"    
+    path_input_test_pt = None
+    path_input_validation_pt = "dataset/validation_pair_sequence_not_sg.pt"
+    
+    path_log_file = "save_bert/log_file_train_full_origin_test_full_viet.txt"
+    output_dir = "save_bert"
+
+    max_seq_length = 400
+    max_query_length = 64
+
+    batch_size = 5
+
+    num_labels = 2
+    weight_class = [1, 1]
+
+    learning_rate = 1e-5
+    gradient_accumulation_steps = 6
+    weight_decay = 0.0
+    adam_epsilon = 1e-8
+    max_grad_norm = 1.0
+    warmup_steps = 0
+    use_pooler = True
+    dropout = 0.1
+
+    num_train_epochs = 4
+    save_steps = int(300 / gradient_accumulation_steps)
+
+    no_cuda = False
+    n_gpu = 1
+    device = "cuda:0"
+    seed = 42
+
+args = Args()
+
+# load tokenizer and config
+config = BertConfig.from_pretrained(args.cache_dir)
+
+# custom some parameter for custom bert
+config = config.to_dict()
+config.update({"weight_class": args.weight_class})
+config.update({"device": args.device})
+config.update({"use_pooler": args.use_pooler})
+config = BertConfig.from_dict(config)
+print(config)
+
+# load tokenizer
+tokenizer = BertTokenizer.from_pretrained(args.cache_dir,
+                                          do_lower_case=args.do_lower_case)
+
+# load model
+model = BERTQa.from_pretrained(args.cache_dir, config=config)
+model = model.to(args.device)
+
+# train model
+train_squad(args, tokenizer, model)
+{
+  "attention_probs_dropout_prob": 0.1,
+  "device": "cuda:0",
+  "directionality": "bidi",
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pooler_fc_size": 768,
+  "pooler_num_attention_heads": 12,
+  "pooler_num_fc_layers": 3,
+  "pooler_size_per_head": 128,
+  "pooler_type": "first_token_transform",
+  "pruned_heads": {},
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "use_pooler": true,
+  "vocab_size": 105879,
+  "weight_class": [
+    1,
+    1
+  ]
+}
+
+Load dataset done !!!
+Log write at epoch: 1, step: 550 and lr: 7e-06
+
+train result - loss: 0.0, acc: 0.905, f1: 0.832
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.061, acc: 0.881, f1: 0.81
+
+end for logging current step 550 !!!
+Log write at epoch: 1, step: 600 and lr: 7e-06
+
+train result - loss: 0.001, acc: 0.893, f1: 0.827
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.062, acc: 0.874, f1: 0.797
+
+end for logging current step 600 !!!
+Log write at epoch: 1, step: 650 and lr: 7e-06
+
+train result - loss: 0.002, acc: 0.899, f1: 0.835
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.062, acc: 0.879, f1: 0.806
+
+end for logging current step 650 !!!
+Log write at epoch: 1, step: 700 and lr: 7e-06
+
+train result - loss: 0.003, acc: 0.896, f1: 0.834
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.063, acc: 0.878, f1: 0.815
+
+end for logging current step 700 !!!
+Log write at epoch: 1, step: 750 and lr: 6e-06
+
+train result - loss: 0.003, acc: 0.895, f1: 0.832
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.063, acc: 0.877, f1: 0.796
+
+end for logging current step 750 !!!
+Log write at epoch: 1, step: 800 and lr: 6e-06
+
+train result - loss: 0.004, acc: 0.896, f1: 0.833
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.062, acc: 0.878, f1: 0.807
+
+end for logging current step 800 !!!
+Log write at epoch: 1, step: 850 and lr: 6e-06
+
+train result - loss: 0.005, acc: 0.896, f1: 0.833
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.061, acc: 0.881, f1: 0.808
+
+end for logging current step 850 !!!
+Log write at epoch: 1, step: 900 and lr: 6e-06
+
+train result - loss: 0.006, acc: 0.897, f1: 0.833
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.059, acc: 0.883, f1: 0.809
+
+end for logging current step 900 !!!
+Log write at epoch: 1, step: 950 and lr: 6e-06
+
+train result - loss: 0.007, acc: 0.898, f1: 0.835
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.062, acc: 0.883, f1: 0.816
+
+end for logging current step 950 !!!
+Log write at epoch: 1, step: 1000 and lr: 5e-06
+
+train result - loss: 0.007, acc: 0.898, f1: 0.836
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.06, acc: 0.886, f1: 0.816
+
+end for logging current step 1000 !!!
+Log write at epoch: 1, step: 1050 and lr: 5e-06
+
+train result - loss: 0.008, acc: 0.897, f1: 0.836
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.056, acc: 0.89, f1: 0.827
+
+end for logging current step 1050 !!!
+Log write at epoch: 1, step: 1060 and lr: 5e-06
+
+train result - loss: 0.008, acc: 0.898, f1: 0.836
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.057, acc: 0.888, f1: 0.819
+
+end for logging current step 1060 !!!
+
+Log write at epoch: 2, step: 1100 and lr: 5e-06
+
+train result - loss: 0.0, acc: 0.937, f1: 0.909
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.067, acc: 0.877, f1: 0.816
+
+end for logging current step 1100 !!!
+Log write at epoch: 2, step: 1150 and lr: 5e-06
+
+train result - loss: 0.001, acc: 0.93, f1: 0.895
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.068, acc: 0.878, f1: 0.792
+
+end for logging current step 1150 !!!
+Log write at epoch: 2, step: 1200 and lr: 4e-06
+
+train result - loss: 0.002, acc: 0.928, f1: 0.89
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.067, acc: 0.88, f1: 0.799
+
+end for logging current step 1200 !!!
+Log write at epoch: 2, step: 1250 and lr: 4e-06
+
+train result - loss: 0.002, acc: 0.926, f1: 0.886
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.065, acc: 0.881, f1: 0.806
+
+end for logging current step 1250 !!!
+Log write at epoch: 2, step: 1300 and lr: 4e-06
+
+train result - loss: 0.003, acc: 0.926, f1: 0.884
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.063, acc: 0.885, f1: 0.811
+
+end for logging current step 1300 !!!
+Log write at epoch: 2, step: 1350 and lr: 4e-06
+
+train result - loss: 0.004, acc: 0.927, f1: 0.883
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.064, acc: 0.885, f1: 0.819
+
+end for logging current step 1350 !!!
+Log write at epoch: 2, step: 1400 and lr: 3e-06
+
+train result - loss: 0.004, acc: 0.928, f1: 0.886
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.064, acc: 0.886, f1: 0.818
+
+end for logging current step 1400 !!!
+Log write at epoch: 2, step: 1450 and lr: 3e-06
+
+train result - loss: 0.005, acc: 0.928, f1: 0.886
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.064, acc: 0.886, f1: 0.823
+
+end for logging current step 1450 !!!
+Log write at epoch: 2, step: 1500 and lr: 3e-06
+
+train result - loss: 0.005, acc: 0.928, f1: 0.885
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.064, acc: 0.886, f1: 0.821
+
+end for logging current step 1500 !!!
+Log write at epoch: 2, step: 1550 and lr: 3e-06
+
+train result - loss: 0.006, acc: 0.928, f1: 0.886
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.067, acc: 0.886, f1: 0.815
+
+end for logging current step 1550 !!!
+Log write at epoch: 2, step: 1590 and lr: 2e-06
+
+train result - loss: 0.006, acc: 0.929, f1: 0.888
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.067, acc: 0.887, f1: 0.816
+
+end for logging current step 1590 !!!
+
+training ...: 69%
+2197/3176 [14:12<04:07, 3.95it/s]
+Log write at epoch: 3, step: 1600 and lr: 2e-06
+
+train result - loss: 0.0, acc: 0.967, f1: 0.945
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.068, acc: 0.887, f1: 0.816
+
+end for logging current step 1600 !!!
+Log write at epoch: 3, step: 1650 and lr: 2e-06
+
+train result - loss: 0.001, acc: 0.947, f1: 0.917
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.07, acc: 0.886, f1: 0.816
+
+end for logging current step 1650 !!!
+Log write at epoch: 3, step: 1700 and lr: 2e-06
+
+train result - loss: 0.001, acc: 0.948, f1: 0.918
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.071, acc: 0.883, f1: 0.816
+
+end for logging current step 1700 !!!
+Log write at epoch: 3, step: 1750 and lr: 2e-06
+
+train result - loss: 0.001, acc: 0.95, f1: 0.92
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.075, acc: 0.887, f1: 0.817
+
+end for logging current step 1750 !!!
+Log write at epoch: 3, step: 1800 and lr: 1e-06
+
+train result - loss: 0.002, acc: 0.95, f1: 0.92
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.076, acc: 0.885, f1: 0.82
+
+end for logging current step 1800 !!!
+Log write at epoch: 3, step: 1850 and lr: 1e-06
+
+train result - loss: 0.002, acc: 0.949, f1: 0.919
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.074, acc: 0.887, f1: 0.819
+
+end for logging current step 1850 !!!
+Log write at epoch: 3, step: 1900 and lr: 1e-06
+
+train result - loss: 0.003, acc: 0.949, f1: 0.919
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.074, acc: 0.886, f1: 0.819
+
+end for logging current step 1900 !!!
+Log write at epoch: 3, step: 1950 and lr: 1e-06
+
+train result - loss: 0.003, acc: 0.95, f1: 0.92
+
+***** Running evaluation
+  Num examples = %d 2228
+test result - loss: 0.073, acc: 0.887, f1: 0.82
+
+end for logging current step 1950 !!!
